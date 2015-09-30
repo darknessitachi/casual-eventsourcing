@@ -22,11 +22,6 @@ public class ItemStockStatus extends Aggregate {
         append(event);
     }
 
-    @Override
-    public String getEventStreamId() {
-        return id;
-    }
-
     public int getAmount() {
         return amount;
     }

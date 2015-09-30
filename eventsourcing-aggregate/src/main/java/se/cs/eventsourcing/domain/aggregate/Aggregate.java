@@ -4,6 +4,7 @@ import org.reflections.ReflectionUtils;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.DomainEvent;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.*;
@@ -128,7 +129,25 @@ public abstract class Aggregate {
         return version;
     }
 
-    public abstract String getEventStreamId();
+    public String getEventStreamId() {
+        Set<Field> fields =
+                ReflectionUtils.getFields(getClass(),
+                        ReflectionUtils.withAnnotation(EventStreamId.class));
+
+        if (fields.size() != 1) {
+            throw new RuntimeException(
+                    String.format("No aggregate id field found in class %s", getClass()));
+        }
+
+        Field first = fields.iterator().next();
+        first.setAccessible(true);
+
+        try {
+            return (String) first.get(this);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

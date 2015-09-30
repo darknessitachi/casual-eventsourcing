@@ -55,9 +55,4 @@ public class Person extends Aggregate {
         this.firstName = event.getFirstName();
         this.lastName = event.getLastName();
     }
-
-    @Override
-    public String getEventStreamId() {
-        return id;
-    }
 }
