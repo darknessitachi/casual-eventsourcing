@@ -5,8 +5,8 @@ import se.cs.eventsourcing.domain.store.AbstractDomainEvent;
 
 public class NewPersonCreated extends AbstractDomainEvent {
 
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
 
     public NewPersonCreated(String firstName, String lastName) {
         super(1);
@@ -20,4 +20,5 @@ public class NewPersonCreated extends AbstractDomainEvent {
 
     public String getFirstName() {
         return firstName;
-    }}
+    }
+}

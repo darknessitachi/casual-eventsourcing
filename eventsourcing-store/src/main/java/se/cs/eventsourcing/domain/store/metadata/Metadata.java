@@ -22,7 +22,7 @@ public class Metadata {
         return new Metadatum(KnownMetadata.USER_REFERENCE.getKey(), checkNotNull(userReference));
     }
 
-    public static Metadatum withCustom(String key, String value) {
+    public static Metadatum withMetadata(String key, String value) {
         checkNotNull(key);
         checkArgument(!KnownMetadata.containsKey(key), "Key %s is taken", key);
 

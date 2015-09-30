@@ -36,7 +36,7 @@ public class MetadataTest {
 
     @Test
     public void withCustomMetadata() {
-        Metadatum custom = Metadata.withCustom("somekey", "asdf");
+        Metadatum custom = Metadata.withMetadata("somekey", "asdf");
 
         assertEquals("somekey", custom.getKey());
         assertEquals("asdf", custom.getValue());
