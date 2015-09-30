@@ -1,2 +1,2 @@
 # casual-eventsourcing
-Learning event sourcing through implementation.
+Learning event sourcing by implementing it
