@@ -9,7 +9,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Base class that event stores can implement to get some
+ * Base class that event stores can extend to get some
  * basic publish/subscribe functionality.
  */
 public abstract class EventPublishingStore implements EventStore {
