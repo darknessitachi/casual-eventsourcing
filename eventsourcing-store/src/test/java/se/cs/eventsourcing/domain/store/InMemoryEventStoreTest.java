@@ -6,6 +6,7 @@ import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
 import se.cs.eventsourcing.domain.store.metadata.KnownMetadata;
 import se.cs.eventsourcing.domain.store.metadata.Metadata;
 import se.cs.eventsourcing.domain.store.metadata.Metadatum;
+import se.cs.eventsourcing.infrastructure.store.EventSubscriber;
 import se.cs.eventsourcing.infrastructure.store.InMemoryEventStore;
 
 import java.util.*;
@@ -92,6 +93,40 @@ public class InMemoryEventStoreTest {
         assertTrue(result.isPresent());
     }
 
+    @Test
+    public void newStreamWithSubscriber() {
+
+        SomeSubscriber subscriber = new SomeSubscriber();
+
+        List<DomainEvent> events = new ArrayList<>();
+        events.add(TestObjectFactory.newSomethingChanged("Something"));
+
+        instance.subscribe(subscriber);
+        instance.newStream(events, Collections.emptySet());
+
+        assertTrue(subscriber.wasCalled());
+    }
+
+    @Test
+    public void appendWithSubscriber() {
+        SomeSubscriber subscriber = new SomeSubscriber();
+        instance.subscribe(subscriber);
+
+        String aggregateId = newEventStream();
+        long expectedVersion = instance.getMostRecentVersion(aggregateId);
+
+        List<DomainEvent> events = new ArrayList<DomainEvent>();
+        events.add(TestObjectFactory.newSomethingChanged("Something else"));
+
+        Set<Metadatum> metadata = new HashSet<>();
+        metadata.add(Metadata.withUserReference("54321"));
+
+        instance.append(
+                new NewChangeSet(aggregateId, expectedVersion, events, metadata));
+
+        assertTrue(subscriber.wasCalled());
+    }
+
     private String newEventStream() {
         List<DomainEvent> events = new ArrayList<DomainEvent>();
         events.add(TestObjectFactory.newSomethingChanged("Something"));
@@ -100,5 +135,19 @@ public class InMemoryEventStoreTest {
         metadata.add(Metadata.withUserReference("12345"));
 
         return instance.newStream(events, metadata);
+    }
+
+    static class SomeSubscriber implements EventSubscriber {
+
+        private boolean wasCalled;
+
+        @Override
+        public void handle(ChangeSet changeSet) {
+            wasCalled = true;
+        }
+
+        boolean wasCalled() {
+            return wasCalled;
+        }
     }
 }

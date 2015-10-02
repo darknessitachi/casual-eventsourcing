@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * A basic in memory event store, just for fun!
  */
-public class InMemoryEventStore implements EventStore, ChangeSetRepository {
+public class InMemoryEventStore extends EventPublishingStore implements ChangeSetRepository {
 
     private final Map<String, List<ChangeSet>> store =new HashMap<>();
 
@@ -54,14 +54,16 @@ public class InMemoryEventStore implements EventStore, ChangeSetRepository {
             metadataMap.put(metadatum.getKey(), metadatum);
         }
 
-        store.get(aggregateId).add(
-                new ChangeSet(
-                        1,
+        ChangeSet changeSet =
+                new ChangeSet(1,
                         aggregateId,
                         storedEvents,
-                        metadataMap));
+                        metadataMap);
 
+        store.get(aggregateId).add(changeSet);
         flattenedStore.get(aggregateId).addAll(storedEvents);
+
+        publish(changeSet);
 
         return aggregateId;
     }
@@ -83,14 +85,16 @@ public class InMemoryEventStore implements EventStore, ChangeSetRepository {
             metadataMap.put(metadatum.getKey(), metadatum);
         }
 
-        store.get(command.getEventStreamId()).add(
-                new ChangeSet(
-                        store.get(command.getEventStreamId()).size() + 1,
+        ChangeSet changeSet =
+                new ChangeSet(store.get(command.getEventStreamId()).size() + 1,
                         command.getEventStreamId(),
                         storedEvents,
-                        metadataMap));
+                        metadataMap);
 
+        store.get(command.getEventStreamId()).add(changeSet);
         flattenedStore.get(command.getEventStreamId()).addAll(storedEvents);
+
+        publish(changeSet);
     }
 
     private List<StoredEvent> toStoredEvents(List<DomainEvent> events, String aggregateId, long startId) {
