@@ -2,7 +2,7 @@ package se.cs.eventsourcing.domain.store.event;
 
 import java.time.LocalDate;
 
-public class PersonEventUpgradeProvider {
+public class PersonEventUpgrader {
 
     @EventUpgrader
     public NewAnimalCreatedWithBirthdate upgrade(NewAnimalCreated event) {

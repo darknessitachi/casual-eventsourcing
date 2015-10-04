@@ -4,8 +4,6 @@ import se.cs.eventsourcing.domain.aggregate.Aggregate;
 import se.cs.eventsourcing.domain.aggregate.DomainEventHandler;
 import se.cs.eventsourcing.domain.aggregate.EventStreamId;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public class ItemStockStatus extends Aggregate {
 
     @EventStreamId

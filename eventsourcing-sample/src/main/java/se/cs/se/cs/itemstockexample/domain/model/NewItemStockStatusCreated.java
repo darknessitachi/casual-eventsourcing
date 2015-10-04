@@ -1,17 +1,15 @@
 package se.cs.se.cs.itemstockexample.domain.model;
 
-import se.cs.eventsourcing.domain.store.AbstractDomainEvent;
+import se.cs.eventsourcing.domain.store.event.DomainEvent;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class NewItemStockStatusCreated extends AbstractDomainEvent {
+public class NewItemStockStatusCreated implements DomainEvent {
 
     private final String name;
     private final int amount;
 
     public NewItemStockStatusCreated(String name,int amount) {
-        super(1);
-
         this.name = checkNotNull(name);
         this.amount = amount;
     }

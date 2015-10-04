@@ -3,6 +3,10 @@ package se.cs.eventsourcing.domain.aggregate;
 import se.cs.eventsourcing.domain.aggregate.events.FirstNameChanged;
 import se.cs.eventsourcing.domain.aggregate.events.LastNameChanged;
 import se.cs.eventsourcing.domain.aggregate.events.NewPersonCreated;
+import se.cs.eventsourcing.domain.aggregate.events.NewPersonCreatedWithBirthdate;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 public class Person extends Aggregate {
 
@@ -11,11 +15,14 @@ public class Person extends Aggregate {
 
     private String firstName;
     private String lastName;
+    private Optional<LocalDate> birthDate;
 
     private Person() {} // for replay purposes
 
-    public Person(String firstName, String lastName) {
-        NewPersonCreated event = new NewPersonCreated(firstName, lastName);
+    public Person(String firstName, String lastName, Optional<LocalDate> birthDate) {
+        NewPersonCreatedWithBirthdate event =
+                new NewPersonCreatedWithBirthdate(firstName, lastName, birthDate);
+
         apply(event);
         append(event);
     }
@@ -40,6 +47,10 @@ public class Person extends Aggregate {
         return lastName;
     }
 
+    public Optional<LocalDate> getBirthDate() {
+        return birthDate;
+    }
+
     @DomainEventHandler
     private void apply(FirstNameChanged event) {
         this.firstName = event.getFirstName();
@@ -51,8 +62,9 @@ public class Person extends Aggregate {
     }
 
     @DomainEventHandler
-    private void apply(NewPersonCreated event) {
+    private void apply(NewPersonCreatedWithBirthdate event) {
         this.firstName = event.getFirstName();
         this.lastName = event.getLastName();
+        this.birthDate = event.getBirthDate();
     }
 }

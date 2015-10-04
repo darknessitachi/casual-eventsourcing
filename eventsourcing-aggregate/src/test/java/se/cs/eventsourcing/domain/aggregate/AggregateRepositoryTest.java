@@ -3,6 +3,7 @@ package se.cs.eventsourcing.domain.aggregate;
 import org.junit.Test;
 import se.cs.eventsourcing.infrastructure.store.InMemoryEventStore;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -34,7 +35,8 @@ public class AggregateRepositoryTest {
         PersonRepository rep =
                 new PersonRepository(new InMemoryEventStore());
 
-        Person person = new Person("Martin", "Moberg");
+        LocalDate birthDate = LocalDate.of(1979, 10, 9);
+        Person person = new Person("Martin", "Moberg", Optional.of(birthDate));
 
         assertNull(person.getEventStreamId());
         assertEquals("Fresh instance means version 0",
@@ -64,7 +66,8 @@ public class AggregateRepositoryTest {
         PersonRepository rep =
                 new PersonRepository(new InMemoryEventStore());
 
-        Person person = new Person("Martin", "Moberg");
+        LocalDate birthDate = LocalDate.of(1979, 10, 9);
+        Person person = new Person("Martin", "Moberg", Optional.of(birthDate));
 
         rep.save(person);
         anEventStreamId = person.getEventStreamId();

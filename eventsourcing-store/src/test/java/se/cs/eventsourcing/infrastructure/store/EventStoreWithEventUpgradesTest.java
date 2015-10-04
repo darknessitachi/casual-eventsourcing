@@ -4,14 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import se.cs.eventsourcing.domain.store.EventStore;
 import se.cs.eventsourcing.domain.store.EventStream;
-import se.cs.eventsourcing.domain.store.TestObjectFactory;
 import se.cs.eventsourcing.domain.store.event.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class EventStoreWithEventUpgradesTest {
 
@@ -20,12 +19,13 @@ public class EventStoreWithEventUpgradesTest {
 
     @Before
     public void setup() {
-        EventStore store = new InMemoryEventStore();
+        EventUpgradeService service =
+                new EventUpgradeService(
+                        Collections.singleton(new PersonEventUpgrader()));
 
-        EventUpgradeService service = new EventUpgradeService(
-                Collections.singleton(new PersonEventUpgradeProvider()));
+        EventStore store = new EventStoreWithEventUpgrades(new InMemoryEventStore(), service);
 
-        instance = new EventStoreWithEventUpgrades(store, service);
+        this.instance = (EventStoreWithEventUpgrades) store;
     }
 
     @Test

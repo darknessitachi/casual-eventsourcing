@@ -6,9 +6,11 @@ import se.cs.eventsourcing.domain.aggregate.events.LastNameChanged;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.event.DomainEvent;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -16,14 +18,16 @@ public class AggregateTest {
 
     @Test
     public void create() {
-        Person aggregate = new Person("Mister", "Bister");
+        LocalDate birthDate = LocalDate.of(1979, 10, 9);
+        Person aggregate = new Person("Mister", "Bister", Optional.of(birthDate));
 
         assertEquals(0, aggregate.version());
     }
 
     @Test
     public void isDirtyTest() {
-        Person aggregate = new Person("Mister", "Bister");
+        LocalDate birthDate = LocalDate.of(1979, 10, 9);
+        Person aggregate = new Person("Mister", "Bister", Optional.of(birthDate));
 
         // the aggregate should be dirty as the constructor generates an event
         assertTrue(aggregate.isDirty());
@@ -46,7 +50,8 @@ public class AggregateTest {
 
     @Test
     public void appendTest() {
-        Person aggregate = new Person("Mister", "Bister");
+        LocalDate birthDate = LocalDate.of(1979, 10, 9);
+        Person aggregate = new Person("Mister", "Bister", Optional.of(birthDate));
 
         DomainEvent event = new FirstNameChanged("Moster");
 
@@ -58,7 +63,8 @@ public class AggregateTest {
 
     @Test
     public void replay() {
-        Person aggregate = new Person("Mister", "Bister");
+        LocalDate birthDate = LocalDate.of(1979, 10, 9);
+        Person aggregate = new Person("Mister", "Bister", Optional.of(birthDate));
 
         // now let's replay some events, 3 in total
         List<DomainEvent> events = new ArrayList<DomainEvent>();

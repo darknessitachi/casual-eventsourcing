@@ -1,14 +1,12 @@
 package se.cs.se.cs.itemstockexample.domain.model;
 
-import se.cs.eventsourcing.domain.store.AbstractDomainEvent;
+import se.cs.eventsourcing.domain.store.event.DomainEvent;
 
-public class AmountDecreased extends AbstractDomainEvent {
+public class AmountDecreased implements DomainEvent {
 
     private final int decreaseAmount;
 
     public AmountDecreased(int decreaseAmount) {
-        super(1);
-
         this.decreaseAmount = decreaseAmount;
     }
 

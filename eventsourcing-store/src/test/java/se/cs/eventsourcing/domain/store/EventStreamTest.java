@@ -14,7 +14,7 @@ public class EventStreamTest {
     public void newFromStart() {
         List<DomainEvent> events = new ArrayList<>();
         events.add(TestObjectFactory.newSomethingChanged("something"));
-        events.add(TestObjectFactory.newSomethingChanged("something else"));
+        events.add(TestObjectFactory.newSomethingChanged("something else!"));
 
         EventStream stream = EventStream.newFromStart(events);
 
