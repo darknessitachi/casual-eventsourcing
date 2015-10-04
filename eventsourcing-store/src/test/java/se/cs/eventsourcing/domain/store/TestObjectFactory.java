@@ -1,5 +1,7 @@
 package se.cs.eventsourcing.domain.store;
 
+import se.cs.eventsourcing.domain.store.event.DomainEvent;
+
 public class TestObjectFactory {
 
     public static SomethingChanged newSomethingChanged(String something) {

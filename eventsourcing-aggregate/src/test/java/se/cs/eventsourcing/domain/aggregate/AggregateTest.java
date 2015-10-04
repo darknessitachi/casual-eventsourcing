@@ -4,7 +4,7 @@ import org.junit.Test;
 import se.cs.eventsourcing.domain.aggregate.events.FirstNameChanged;
 import se.cs.eventsourcing.domain.aggregate.events.LastNameChanged;
 import se.cs.eventsourcing.domain.store.EventStream;
-import se.cs.eventsourcing.domain.store.DomainEvent;
+import se.cs.eventsourcing.domain.store.event.DomainEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;

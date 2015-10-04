@@ -1,6 +1,6 @@
 package se.cs.eventsourcing.domain.store.changeset;
 
-import se.cs.eventsourcing.domain.store.DomainEvent;
+import se.cs.eventsourcing.domain.store.event.DomainEvent;
 
 import java.util.Objects;
 

@@ -1,8 +1,11 @@
-package se.cs.eventsourcing.domain.store;
+package se.cs.eventsourcing.infrastructure.store;
 
 import org.junit.Test;
+import se.cs.eventsourcing.domain.store.EventStream;
+import se.cs.eventsourcing.domain.store.TestObjectFactory;
 import se.cs.eventsourcing.domain.store.changeset.ChangeSet;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
+import se.cs.eventsourcing.domain.store.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.metadata.KnownMetadata;
 import se.cs.eventsourcing.domain.store.metadata.Metadata;
 import se.cs.eventsourcing.domain.store.metadata.Metadatum;

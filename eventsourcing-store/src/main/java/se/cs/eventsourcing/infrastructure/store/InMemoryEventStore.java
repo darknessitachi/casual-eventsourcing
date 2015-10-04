@@ -1,7 +1,6 @@
 package se.cs.eventsourcing.infrastructure.store;
 
-import se.cs.eventsourcing.domain.store.DomainEvent;
-import se.cs.eventsourcing.domain.store.EventStore;
+import se.cs.eventsourcing.domain.store.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.changeset.ChangeSet;
 import se.cs.eventsourcing.domain.store.changeset.ChangeSetRepository;

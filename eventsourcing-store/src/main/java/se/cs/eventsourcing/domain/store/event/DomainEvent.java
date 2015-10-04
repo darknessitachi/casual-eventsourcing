@@ -1,4 +1,4 @@
-package se.cs.eventsourcing.domain.store;
+package se.cs.eventsourcing.domain.store.event;
 
 /**
  * A domain event is something that has happened in the past.

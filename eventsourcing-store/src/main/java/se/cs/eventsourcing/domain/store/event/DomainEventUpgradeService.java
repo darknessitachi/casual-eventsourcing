@@ -1,7 +1,6 @@
-package se.cs.eventsourcing.domain.store.upgrade;
+package se.cs.eventsourcing.domain.store.event;
 
 import org.reflections.ReflectionUtils;
-import se.cs.eventsourcing.domain.store.DomainEvent;
 
 import java.lang.reflect.Method;
 import java.util.*;

@@ -1,7 +1,6 @@
-package se.cs.eventsourcing.domain.store.upgrade;
+package se.cs.eventsourcing.domain.store.event;
 
 import org.junit.Test;
-import se.cs.eventsourcing.domain.store.DomainEvent;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

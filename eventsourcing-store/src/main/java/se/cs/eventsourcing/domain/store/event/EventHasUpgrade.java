@@ -1,10 +1,12 @@
-package se.cs.eventsourcing.domain.store.upgrade;
+package se.cs.eventsourcing.domain.store.event;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EventUpgrader {}
+public @interface EventHasUpgrade {
+    Class<? extends DomainEvent> value();
+}

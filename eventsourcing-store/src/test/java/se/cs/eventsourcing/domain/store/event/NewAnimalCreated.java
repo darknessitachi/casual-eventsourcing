@@ -1,6 +1,4 @@
-package se.cs.eventsourcing.domain.store.upgrade;
-
-import se.cs.eventsourcing.domain.store.DomainEvent;
+package se.cs.eventsourcing.domain.store.event;
 
 @EventHasUpgrade(NewAnimalCreatedWithBirthdate.class)
 public class NewAnimalCreated implements DomainEvent {

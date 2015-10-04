@@ -1,5 +1,7 @@
 package se.cs.eventsourcing.domain.store;
 
+import se.cs.eventsourcing.domain.store.event.DomainEvent;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
