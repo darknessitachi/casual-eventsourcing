@@ -1,17 +1,16 @@
 package se.cs.eventsourcing.domain.store.upgrade;
 
-import se.cs.eventsourcing.domain.store.AbstractDomainEvent;
+import se.cs.eventsourcing.domain.store.DomainEvent;
 
 import java.time.LocalDate;
 
-public class NewAnimalCreatedWithZooName extends AbstractDomainEvent {
+public class NewAnimalCreatedWithZooName implements DomainEvent {
 
     private final String name;
     private final LocalDate birthDate;
     private final String zooName;
 
     public NewAnimalCreatedWithZooName(String name, LocalDate birthDate, String zooName) {
-        super(1);
         this.name = name;
         this.birthDate = birthDate;
         this.zooName = zooName;

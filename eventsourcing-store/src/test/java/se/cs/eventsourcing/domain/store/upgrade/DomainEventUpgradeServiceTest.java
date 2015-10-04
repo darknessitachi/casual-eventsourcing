@@ -73,12 +73,7 @@ public class DomainEventUpgradeServiceTest {
 
         DomainEventUpgradeService service = new DomainEventUpgradeService(updateProviders);
 
-        DomainEvent event = new DomainEvent() {
-            @Override
-            public int eventVersion() {
-                return 0;
-            }
-        };
+        DomainEvent event = new DomainEvent() {};
 
         DomainEvent result = service.upgrade(event);
 

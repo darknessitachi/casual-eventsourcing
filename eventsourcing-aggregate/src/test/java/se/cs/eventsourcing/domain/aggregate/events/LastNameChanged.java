@@ -1,14 +1,13 @@
 package se.cs.eventsourcing.domain.aggregate.events;
 
 import com.google.common.base.Preconditions;
-import se.cs.eventsourcing.domain.store.AbstractDomainEvent;
+import se.cs.eventsourcing.domain.store.DomainEvent;
 
-public class LastNameChanged extends AbstractDomainEvent {
+public class LastNameChanged implements DomainEvent {
 
     private String newValue;
 
     public LastNameChanged(String newValue) {
-        super(1);
         this.newValue = Preconditions.checkNotNull(newValue);
     }
 

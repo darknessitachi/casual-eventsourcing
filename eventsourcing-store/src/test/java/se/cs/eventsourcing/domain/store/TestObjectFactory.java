@@ -6,12 +6,11 @@ public class TestObjectFactory {
         return new SomethingChanged(something);
     }
 
-    public static class SomethingChanged extends AbstractDomainEvent {
+    public static class SomethingChanged implements DomainEvent {
 
         private final String something;
 
         public SomethingChanged(String something) {
-            super(1);
             this.something = something;
         }
 

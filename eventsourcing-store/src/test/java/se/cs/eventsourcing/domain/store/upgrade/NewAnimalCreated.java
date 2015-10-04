@@ -1,14 +1,13 @@
 package se.cs.eventsourcing.domain.store.upgrade;
 
-import se.cs.eventsourcing.domain.store.AbstractDomainEvent;
+import se.cs.eventsourcing.domain.store.DomainEvent;
 
 @EventHasUpgrade(NewAnimalCreatedWithBirthdate.class)
-public class NewAnimalCreated extends AbstractDomainEvent {
+public class NewAnimalCreated implements DomainEvent {
 
     private final String name;
 
     NewAnimalCreated(String name) {
-        super(1);
         this.name = name;
     }
 
