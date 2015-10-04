@@ -9,18 +9,18 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-public class DomainEventUpgradeServiceTest {
+public class EventUpgradeServiceTest {
 
 
     @Test
     public void supportedDomainEventsTest() {
         Collection<Object> updateProviders = new ArrayList<>();
-        updateProviders.add(new PersonDomainEventUpgrader());
+        updateProviders.add(new PersonEventUpgradeProvider());
 
-        DomainEventUpgradeService service = new DomainEventUpgradeService(updateProviders);
+        EventUpgradeService service = new EventUpgradeService(updateProviders);
 
         Set<Class<DomainEvent>> result =
-                service.supportedDomainEvents(PersonDomainEventUpgrader.class);
+                service.supportedDomainEvents(PersonEventUpgradeProvider.class);
 
         assertEquals(2, result.size());
         assertTrue(result.contains(NewAnimalCreated.class));
@@ -30,9 +30,9 @@ public class DomainEventUpgradeServiceTest {
     @Test
     public void upgrade() {
         Collection<Object> updateProviders = new ArrayList<>();
-        updateProviders.add(new PersonDomainEventUpgrader());
+        updateProviders.add(new PersonEventUpgradeProvider());
 
-        DomainEventUpgradeService service = new DomainEventUpgradeService(updateProviders);
+        EventUpgradeService service = new EventUpgradeService(updateProviders);
 
         DomainEvent event = new NewAnimalCreatedWithBirthdate("Polly", LocalDate.now());
 
@@ -49,9 +49,9 @@ public class DomainEventUpgradeServiceTest {
     @Test
     public void upgradeRecursively() {
         Collection<Object> updateProviders = new ArrayList<>();
-        updateProviders.add(new PersonDomainEventUpgrader());
+        updateProviders.add(new PersonEventUpgradeProvider());
 
-        DomainEventUpgradeService service = new DomainEventUpgradeService(updateProviders);
+        EventUpgradeService service = new EventUpgradeService(updateProviders);
 
         DomainEvent event = new NewAnimalCreated("Polly");
 
@@ -68,9 +68,9 @@ public class DomainEventUpgradeServiceTest {
     @Test
     public void upgradeEventNotInNeedOfAnUpgrade() {
         Collection<Object> updateProviders = new ArrayList<>();
-        updateProviders.add(new PersonDomainEventUpgrader());
+        updateProviders.add(new PersonEventUpgradeProvider());
 
-        DomainEventUpgradeService service = new DomainEventUpgradeService(updateProviders);
+        EventUpgradeService service = new EventUpgradeService(updateProviders);
 
         DomainEvent event = new DomainEvent() {};
 

@@ -5,11 +5,11 @@ import org.reflections.ReflectionUtils;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class DomainEventUpgradeService {
+public class EventUpgradeService {
 
     private Map<Class<DomainEvent>, Object> eventTypeToProvider = new HashMap<>();
 
-    public DomainEventUpgradeService(Collection<Object> upgradeProviders) {
+    public EventUpgradeService(Collection<Object> upgradeProviders) {
         upgradeProviders.forEach(this::register);
     }
 

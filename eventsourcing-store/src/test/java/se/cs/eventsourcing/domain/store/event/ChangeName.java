@@ -1,11 +1,10 @@
 package se.cs.eventsourcing.domain.store.event;
 
-@EventHasUpgrade(NewAnimalCreatedWithBirthdate.class)
-public class NewAnimalCreated implements DomainEvent {
+public class ChangeName implements DomainEvent {
 
     private final String name;
 
-    public NewAnimalCreated(String name) {
+    public ChangeName(String name) {
         this.name = name;
     }
 
