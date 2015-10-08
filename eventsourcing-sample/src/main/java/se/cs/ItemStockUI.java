@@ -103,12 +103,12 @@ public class ItemStockUI extends UI {
 
     private void populateBottomLeft(AbstractComponentContainer container) {
         changeSets.setSizeFull();
-        changeSets.addContainerProperty("id", Long.class, null);
+        changeSets.addContainerProperty("id", String.class, null);
         changeSets.addContainerProperty("when", String.class, null);
         changeSets.addContainerProperty("user", String.class, null);
 
         changeSets.addItemClickListener(
-                itemClickEvent -> refreshTree(Long.parseLong(itemClickEvent.getItem().getItemProperty("id").getValue().toString())));
+                itemClickEvent -> refreshTree(itemClickEvent.getItem().getItemProperty("id").getValue().toString()));
 
         refreshChangeSets();
 
@@ -137,12 +137,11 @@ public class ItemStockUI extends UI {
         }
     }
 
-    void refreshTree(long id) {
+    void refreshTree(String id) {
         tree.removeAllItems();
 
         ChangeSet changeSet =
-                changeSetRepository.getChangeSetById(
-                        aggregate.getEventStreamId(), id).get();
+                changeSetRepository.getChangeSetById(id).get();
 
         for (StoredEvent event : changeSet.getStoredEvents()) {
             String node = String.format("%s{id=%s}",

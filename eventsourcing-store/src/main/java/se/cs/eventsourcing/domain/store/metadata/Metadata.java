@@ -24,7 +24,6 @@ public class Metadata {
 
     public static Metadatum withMetadata(String key, String value) {
         checkNotNull(key);
-        checkArgument(!KnownMetadata.containsKey(key), "Key %s is taken", key);
 
         return new Metadatum(key, value);
     }

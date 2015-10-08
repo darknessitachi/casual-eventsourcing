@@ -35,4 +35,12 @@ public class Metadatum {
     public int hashCode() {
         return Objects.hash(key, value);
     }
+
+    @Override
+    public String toString() {
+        return "Metadatum{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

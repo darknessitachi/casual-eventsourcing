@@ -68,15 +68,14 @@ public class InMemoryEventStoreTest {
 
     @Test
     public void getChangeSets() {
-        String aggregateId = newEventStream();
+        String eventStreamId = newEventStream();
 
         // so there should be one change set containing one event..
-        List<ChangeSet> changeSets = instance.getChangeSets(aggregateId);
+        List<ChangeSet> changeSets = instance.getChangeSets(eventStreamId);
 
         ChangeSet changeSet = changeSets.get(0);
 
-        assertEquals(1, changeSet.getId());
-        assertEquals(aggregateId, changeSet.getEventStreamId());
+        assertEquals(eventStreamId, changeSet.getEventStreamId());
         assertEquals(1, changeSet.getMetadata().size());
 
         // user metadata
@@ -87,11 +86,12 @@ public class InMemoryEventStoreTest {
 
     @Test
     public void getChangeSetById() {
-        String aggregateId = newEventStream();
+        String eventStreamId = newEventStream();
 
-        // the first change set in an aggregate will have its id set to 1
+        ChangeSet changeSet = instance.getChangeSets(eventStreamId).get(0);
+
         Optional<ChangeSet> result =
-                instance.getChangeSetById(aggregateId, 1);
+                instance.getChangeSetById(changeSet.getId());
 
         assertTrue(result.isPresent());
     }

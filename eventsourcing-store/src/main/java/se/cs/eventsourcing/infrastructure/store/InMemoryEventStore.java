@@ -46,7 +46,7 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
         store.put(aggregateId, new ArrayList<>());
         flattenedStore.put(aggregateId, new ArrayList<>());
 
-        List<StoredEvent> storedEvents = toStoredEvents(events, aggregateId, 1);
+        List<StoredEvent> storedEvents = toStoredEvents(events, aggregateId);
 
         Map<String, Metadatum> metadataMap = new HashMap<>();
         for (Metadatum metadatum : metadata) {
@@ -54,7 +54,7 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
         }
 
         ChangeSet changeSet =
-                new ChangeSet(1,
+                new ChangeSet(UUID.randomUUID().toString(),
                         aggregateId,
                         storedEvents,
                         metadataMap);
@@ -77,7 +77,7 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
         }
 
         List<StoredEvent> storedEvents =
-                toStoredEvents(command.getEvents(), command.getEventStreamId(), currentVersion + 1);
+                toStoredEvents(command.getEvents(), command.getEventStreamId());
 
         Map<String, Metadatum> metadataMap = new HashMap<>();
         for (Metadatum metadatum : command.getMetadata()) {
@@ -85,7 +85,7 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
         }
 
         ChangeSet changeSet =
-                new ChangeSet(store.get(command.getEventStreamId()).size() + 1,
+                new ChangeSet(UUID.randomUUID().toString(),
                         command.getEventStreamId(),
                         storedEvents,
                         metadataMap);
@@ -96,11 +96,11 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
         publish(changeSet);
     }
 
-    private List<StoredEvent> toStoredEvents(List<DomainEvent> events, String aggregateId, long startId) {
+    private List<StoredEvent> toStoredEvents(List<DomainEvent> events, String aggregateId) {
         List<StoredEvent> result = new ArrayList<>();
 
         for (DomainEvent event : events) {
-            result.add(new StoredEvent(startId++, aggregateId, event));
+            result.add(new StoredEvent(UUID.randomUUID().toString(), aggregateId, event));
         }
 
         return result;
@@ -122,28 +122,12 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
                 : Collections.<ChangeSet>emptyList();
     }
 
-    public Optional<ChangeSet> getChangeSetById(String eventStreamId, long changeSetId) {
-        if (!store.containsKey(eventStreamId)) {
-            return Optional.empty();
-        }
-
-        for (ChangeSet changeSet : store.get(eventStreamId)) {
-            if (changeSet.getId() == changeSetId) {
-                return Optional.of(changeSet);
-            }
-        }
-
-        return Optional.empty();
-    }
-
-    public Optional<ChangeSet> getChangeSetByEventId(String eventStreamId, long eventId) {
-        if (!store.containsKey(eventStreamId)) {
-            return Optional.empty();
-        }
-
-        for (ChangeSet changeSet : store.get(eventStreamId)) {
-            if (changeSet.containsEvent(eventId)) {
-                return Optional.of(changeSet);
+    public Optional<ChangeSet> getChangeSetById(String changeSetId) {
+        for (List<ChangeSet> changeSets : store.values()){
+            for (ChangeSet changeSet : changeSets) {
+                if (changeSetId.equals(changeSet.getId())) {
+                    return Optional.of(changeSet);
+                }
             }
         }
 

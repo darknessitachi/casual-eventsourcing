@@ -6,17 +6,17 @@ import java.util.Objects;
 
 public class StoredEvent {
 
-    private final long id;
+    private final String id;
     private final String eventStreamId;
     private final DomainEvent event;
 
-    public StoredEvent(long id, String eventStreamId, DomainEvent event) {
+    public StoredEvent(String id, String eventStreamId, DomainEvent event) {
         this.id = id;
         this.eventStreamId = eventStreamId;
         this.event = event;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -40,5 +40,14 @@ public class StoredEvent {
     @Override
     public int hashCode() {
         return Objects.hash(id, eventStreamId);
+    }
+
+    @Override
+    public String toString() {
+        return "StoredEvent{" +
+                "id='" + id + '\'' +
+                ", eventStreamId='" + eventStreamId + '\'' +
+                ", event=" + event +
+                '}';
     }
 }

@@ -12,7 +12,12 @@
         <module>eventsourcing-store</module>
         <module>eventsourcing-aggregate</module>
         <module>eventsourcing-sample</module>
+        <module>eventsourcing-store-jdbc</module>
     </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
     <build>
         <plugins>
@@ -25,7 +30,6 @@
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
 
     <dependencies>

@@ -21,7 +21,7 @@ public class EventStoreWithEventUpgradesTest {
     public void setup() {
         EventUpgradeService service =
                 new EventUpgradeService(
-                        Collections.singleton(new PersonEventUpgrader()));
+                        Collections.singleton(new AnimalEventUpgrader()));
 
         EventStore store = new EventStoreWithEventUpgrades(new InMemoryEventStore(), service);
 

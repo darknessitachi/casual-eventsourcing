@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ChangeSet {
-    private final long id;
+    private final String id;
     private final String eventStreamId;
     private final List<StoredEvent> storedEvents;
     private final Map<String, Metadatum> metadata;
 
-    public ChangeSet(long id,
+    public ChangeSet(String id,
                      String eventStreamId,
                      List<StoredEvent> storedEvents,
                      Map<String, Metadatum> metadata) {
@@ -23,7 +23,7 @@ public class ChangeSet {
         this.metadata = metadata;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -39,9 +39,9 @@ public class ChangeSet {
         return metadata;
     }
 
-    public boolean containsEvent(long eventId) {
+    public boolean containsEvent(String eventId) {
         for (StoredEvent storedEvent : storedEvents) {
-            if (storedEvent.getId() == eventId) {
+            if (storedEvent.getId().equals(eventId)) {
                 return true;
             }
         }
@@ -61,5 +61,15 @@ public class ChangeSet {
     @Override
     public int hashCode() {
         return Objects.hash(id, eventStreamId);
+    }
+
+    @Override
+    public String toString() {
+        return "ChangeSet{" +
+                "id='" + id + '\'' +
+                ", eventStreamId='" + eventStreamId + '\'' +
+                ", storedEvents=" + storedEvents +
+                ", metadata=" + metadata +
+                '}';
     }
 }

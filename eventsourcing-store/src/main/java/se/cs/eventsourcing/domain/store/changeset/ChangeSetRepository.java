@@ -11,7 +11,5 @@ public interface ChangeSetRepository {
 
     List<ChangeSet> getChangeSets(String eventStreamId);
 
-    Optional<ChangeSet> getChangeSetById(String eventStreamId, long changeSetId);
-
-    Optional<ChangeSet> getChangeSetByEventId(String eventStreamId, long eventId);
+    Optional<ChangeSet> getChangeSetById(String changeSetId);
 }

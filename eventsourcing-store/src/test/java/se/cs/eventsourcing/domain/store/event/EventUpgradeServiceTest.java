@@ -15,12 +15,12 @@ public class EventUpgradeServiceTest {
     @Test
     public void supportedDomainEventsTest() {
         Collection<Object> updateProviders = new ArrayList<>();
-        updateProviders.add(new PersonEventUpgrader());
+        updateProviders.add(new AnimalEventUpgrader());
 
         EventUpgradeService service = new EventUpgradeService(updateProviders);
 
         Set<Class<DomainEvent>> result =
-                service.supportedDomainEvents(PersonEventUpgrader.class);
+                service.supportedDomainEvents(AnimalEventUpgrader.class);
 
         assertEquals(2, result.size());
         assertTrue(result.contains(NewAnimalCreated.class));
@@ -30,7 +30,7 @@ public class EventUpgradeServiceTest {
     @Test
     public void upgrade() {
         Collection<Object> updateProviders = new ArrayList<>();
-        updateProviders.add(new PersonEventUpgrader());
+        updateProviders.add(new AnimalEventUpgrader());
 
         EventUpgradeService service = new EventUpgradeService(updateProviders);
 
@@ -49,7 +49,7 @@ public class EventUpgradeServiceTest {
     @Test
     public void upgradeRecursively() {
         Collection<Object> updateProviders = new ArrayList<>();
-        updateProviders.add(new PersonEventUpgrader());
+        updateProviders.add(new AnimalEventUpgrader());
 
         EventUpgradeService service = new EventUpgradeService(updateProviders);
 
@@ -68,7 +68,7 @@ public class EventUpgradeServiceTest {
     @Test
     public void upgradeEventNotInNeedOfAnUpgrade() {
         Collection<Object> updateProviders = new ArrayList<>();
-        updateProviders.add(new PersonEventUpgrader());
+        updateProviders.add(new AnimalEventUpgrader());
 
         EventUpgradeService service = new EventUpgradeService(updateProviders);
 
