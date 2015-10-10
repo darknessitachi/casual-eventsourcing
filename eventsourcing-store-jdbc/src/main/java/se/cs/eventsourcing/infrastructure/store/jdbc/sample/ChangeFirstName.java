@@ -1,6 +1,6 @@
 package se.cs.eventsourcing.infrastructure.store.jdbc.sample;
 
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 
 public class ChangeFirstName implements DomainEvent {
 

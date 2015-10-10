@@ -1,6 +1,6 @@
 package se.cs.eventsourcing.infrastructure.store;
 
-import se.cs.eventsourcing.domain.store.changeset.ChangeSet;
+import se.cs.eventsourcing.domain.changeset.ChangeSet;
 
 /**
  * If you want to receive events you better implement this

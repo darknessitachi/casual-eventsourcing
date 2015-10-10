@@ -1,8 +1,7 @@
 package se.cs.eventsourcing.infrastructure.store;
 
+import se.cs.eventsourcing.domain.changeset.ChangeSet;
 import se.cs.eventsourcing.domain.store.EventStore;
-import se.cs.eventsourcing.domain.store.changeset.ChangeSet;
-
 import java.util.ArrayList;
 import java.util.List;
 

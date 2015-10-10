@@ -2,6 +2,7 @@ package se.cs.eventsourcing.infrastructure.store;
 
 import org.junit.Before;
 import org.junit.Test;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStore;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.event.*;

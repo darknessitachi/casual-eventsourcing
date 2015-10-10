@@ -1,6 +1,7 @@
 package se.cs.eventsourcing.domain.store.event;
 
 import org.reflections.ReflectionUtils;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 
 import java.lang.reflect.Method;
 import java.util.*;

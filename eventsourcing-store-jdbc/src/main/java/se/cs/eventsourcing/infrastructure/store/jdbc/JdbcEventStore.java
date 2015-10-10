@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
-import se.cs.eventsourcing.domain.store.metadata.Metadatum;
 import se.cs.eventsourcing.infrastructure.store.EventPublishingStore;
 
 import javax.sql.DataSource;

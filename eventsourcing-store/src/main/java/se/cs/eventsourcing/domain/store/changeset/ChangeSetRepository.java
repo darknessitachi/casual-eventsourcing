@@ -1,5 +1,7 @@
 package se.cs.eventsourcing.domain.store.changeset;
 
+import se.cs.eventsourcing.domain.changeset.ChangeSet;
+
 import java.util.List;
 import java.util.Optional;
 

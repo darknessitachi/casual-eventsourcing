@@ -1,5 +1,7 @@
 package se.cs.eventsourcing.domain.store.event;
 
+import se.cs.eventsourcing.domain.event.DomainEvent;
+
 import java.time.LocalDate;
 
 public class NewAnimalCreatedWithZooName implements DomainEvent {

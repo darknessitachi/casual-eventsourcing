@@ -1,4 +1,4 @@
-package se.cs.eventsourcing.domain.store.metadata;
+package se.cs.eventsourcing.domain.changeset;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

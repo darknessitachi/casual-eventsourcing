@@ -1,8 +1,8 @@
 package se.cs.eventsourcing.domain.aggregate;
 
 import org.reflections.ReflectionUtils;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

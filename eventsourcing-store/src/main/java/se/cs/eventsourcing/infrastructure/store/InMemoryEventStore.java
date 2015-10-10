@@ -1,12 +1,12 @@
 package se.cs.eventsourcing.infrastructure.store;
 
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
+import se.cs.eventsourcing.domain.changeset.ChangeSet;
+import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.event.DomainEvent;
+import se.cs.eventsourcing.domain.event.StoredEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
-import se.cs.eventsourcing.domain.store.changeset.ChangeSet;
 import se.cs.eventsourcing.domain.store.changeset.ChangeSetRepository;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
-import se.cs.eventsourcing.domain.store.changeset.StoredEvent;
-import se.cs.eventsourcing.domain.store.metadata.Metadatum;
 
 import java.util.*;
 

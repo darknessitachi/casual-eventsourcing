@@ -1,6 +1,9 @@
 package se.cs.eventsourcing.domain.store.metadata;
 
 import org.junit.Test;
+import se.cs.eventsourcing.domain.changeset.KnownMetadata;
+import se.cs.eventsourcing.domain.changeset.Metadata;
+import se.cs.eventsourcing.domain.changeset.Metadatum;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

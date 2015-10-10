@@ -12,6 +12,7 @@
         <module>eventsourcing-store</module>
         <module>eventsourcing-aggregate</module>
         <module>eventsourcing-store-jdbc</module>
+        <module>eventsourcing-event-api</module>
     </modules>
 
     <properties>

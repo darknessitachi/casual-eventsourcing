@@ -1,4 +1,4 @@
-package se.cs.eventsourcing.domain.store.metadata;
+package se.cs.eventsourcing.domain.changeset;
 
 import java.util.Objects;
 
@@ -6,8 +6,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Metadatum {
 
-    private final String key;
-    private final String value;
+    private String key;
+    private String value;
+
+    private Metadatum() {}
 
     Metadatum(String key, String value) {
         this.key = checkNotNull(key);

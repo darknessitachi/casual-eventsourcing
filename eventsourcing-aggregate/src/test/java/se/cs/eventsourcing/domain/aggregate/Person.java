@@ -2,7 +2,6 @@ package se.cs.eventsourcing.domain.aggregate;
 
 import se.cs.eventsourcing.domain.aggregate.events.FirstNameChanged;
 import se.cs.eventsourcing.domain.aggregate.events.LastNameChanged;
-import se.cs.eventsourcing.domain.aggregate.events.NewPersonCreated;
 import se.cs.eventsourcing.domain.aggregate.events.NewPersonCreatedWithBirthdate;
 
 import java.time.LocalDate;

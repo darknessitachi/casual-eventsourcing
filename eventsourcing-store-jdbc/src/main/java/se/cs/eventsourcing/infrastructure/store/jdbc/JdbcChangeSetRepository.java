@@ -5,12 +5,12 @@ import com.google.common.base.Throwables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import se.cs.eventsourcing.domain.store.changeset.ChangeSet;
+import se.cs.eventsourcing.domain.changeset.ChangeSet;
+import se.cs.eventsourcing.domain.changeset.Metadata;
+import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.event.DomainEvent;
+import se.cs.eventsourcing.domain.event.StoredEvent;
 import se.cs.eventsourcing.domain.store.changeset.ChangeSetRepository;
-import se.cs.eventsourcing.domain.store.changeset.StoredEvent;
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
-import se.cs.eventsourcing.domain.store.metadata.Metadata;
-import se.cs.eventsourcing.domain.store.metadata.Metadatum;
 
 import javax.sql.DataSource;
 import java.util.*;

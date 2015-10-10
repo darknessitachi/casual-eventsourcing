@@ -1,6 +1,6 @@
 package se.cs.eventsourcing.domain.store;
 
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 
 public class TestObjectFactory {
 

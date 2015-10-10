@@ -1,4 +1,4 @@
-package se.cs.eventsourcing.domain.store.metadata;
+package se.cs.eventsourcing.domain.changeset;
 
 public enum KnownMetadata {
     USER_REFERENCE("casual.store.metadatum.user"),

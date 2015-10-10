@@ -8,10 +8,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import se.cs.eventsourcing.domain.store.changeset.ChangeSet;
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
-import se.cs.eventsourcing.domain.store.metadata.Metadata;
-import se.cs.eventsourcing.domain.store.metadata.Metadatum;
+import se.cs.eventsourcing.domain.changeset.ChangeSet;
+import se.cs.eventsourcing.domain.changeset.Metadata;
+import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.infrastructure.store.jdbc.sample.ChangeFirstName;
 import se.cs.eventsourcing.infrastructure.store.jdbc.sample.ChangeLastName;
 

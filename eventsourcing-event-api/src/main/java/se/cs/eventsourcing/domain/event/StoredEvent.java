@@ -1,14 +1,14 @@
-package se.cs.eventsourcing.domain.store.changeset;
-
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
+package se.cs.eventsourcing.domain.event;
 
 import java.util.Objects;
 
 public class StoredEvent {
 
-    private final String id;
-    private final String eventStreamId;
-    private final DomainEvent event;
+    private String id;
+    private String eventStreamId;
+    private DomainEvent event;
+
+    private StoredEvent() {}
 
     public StoredEvent(String id, String eventStreamId, DomainEvent event) {
         this.id = id;

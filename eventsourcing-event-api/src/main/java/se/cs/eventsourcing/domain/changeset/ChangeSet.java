@@ -1,16 +1,18 @@
-package se.cs.eventsourcing.domain.store.changeset;
+package se.cs.eventsourcing.domain.changeset;
 
-import se.cs.eventsourcing.domain.store.metadata.Metadatum;
+import se.cs.eventsourcing.domain.event.StoredEvent;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class ChangeSet {
-    private final String id;
-    private final String eventStreamId;
-    private final List<StoredEvent> storedEvents;
-    private final Map<String, Metadatum> metadata;
+    private String id;
+    private String eventStreamId;
+    private List<StoredEvent> storedEvents;
+    private Map<String, Metadatum> metadata;
+
+    private ChangeSet() {}
 
     public ChangeSet(String id,
                      String eventStreamId,

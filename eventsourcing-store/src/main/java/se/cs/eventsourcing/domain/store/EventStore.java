@@ -1,8 +1,8 @@
 package se.cs.eventsourcing.domain.store;
 
+import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
-import se.cs.eventsourcing.domain.store.metadata.Metadatum;
 
 import java.util.List;
 import java.util.Optional;

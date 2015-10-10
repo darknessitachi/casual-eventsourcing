@@ -3,8 +3,8 @@ package se.cs.eventsourcing.domain.aggregate;
 import org.junit.Test;
 import se.cs.eventsourcing.domain.aggregate.events.FirstNameChanged;
 import se.cs.eventsourcing.domain.aggregate.events.LastNameChanged;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

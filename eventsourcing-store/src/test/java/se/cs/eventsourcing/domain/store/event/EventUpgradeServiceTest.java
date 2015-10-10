@@ -1,6 +1,7 @@
 package se.cs.eventsourcing.domain.store.event;
 
 import org.junit.Test;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

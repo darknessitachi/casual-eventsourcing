@@ -1,7 +1,7 @@
 package se.cs.eventsourcing.domain.aggregate.events;
 
 import com.google.common.base.Preconditions;
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 
 public class FirstNameChanged implements DomainEvent {
 

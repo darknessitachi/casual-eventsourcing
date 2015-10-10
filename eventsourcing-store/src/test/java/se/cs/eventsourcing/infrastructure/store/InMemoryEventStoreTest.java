@@ -1,16 +1,14 @@
 package se.cs.eventsourcing.infrastructure.store;
 
 import org.junit.Test;
+import se.cs.eventsourcing.domain.changeset.ChangeSet;
+import se.cs.eventsourcing.domain.changeset.KnownMetadata;
+import se.cs.eventsourcing.domain.changeset.Metadata;
+import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.TestObjectFactory;
-import se.cs.eventsourcing.domain.store.changeset.ChangeSet;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
-import se.cs.eventsourcing.domain.store.event.DomainEvent;
-import se.cs.eventsourcing.domain.store.metadata.KnownMetadata;
-import se.cs.eventsourcing.domain.store.metadata.Metadata;
-import se.cs.eventsourcing.domain.store.metadata.Metadatum;
-import se.cs.eventsourcing.infrastructure.store.EventSubscriber;
-import se.cs.eventsourcing.infrastructure.store.InMemoryEventStore;
 
 import java.util.*;
 
