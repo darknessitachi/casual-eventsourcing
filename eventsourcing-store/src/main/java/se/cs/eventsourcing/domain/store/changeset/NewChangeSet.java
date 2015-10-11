@@ -1,6 +1,6 @@
 package se.cs.eventsourcing.domain.store.changeset;
 
-import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.changeset.Metadata;
 import se.cs.eventsourcing.domain.event.DomainEvent;
 
 import java.util.*;
@@ -13,10 +13,10 @@ public class NewChangeSet {
     private final String eventStreamId;
     private final long expectedVersion;
     private final List<DomainEvent> events;
-    private final Set<Metadatum> metadata;
+    private final Set<Metadata> metadata;
 
     public NewChangeSet(String eventStreamId, long expectedVersion,
-                        List<DomainEvent> events, Set<Metadatum> metadata) {
+                        List<DomainEvent> events, Set<Metadata> metadata) {
 
         checkArgument(expectedVersion > 0);
 
@@ -38,7 +38,7 @@ public class NewChangeSet {
         return Collections.unmodifiableList(events);
     }
 
-    public Set<Metadatum> getMetadata() {
+    public Set<Metadata> getMetadata() {
         return Collections.unmodifiableSet(metadata);
     }
 }

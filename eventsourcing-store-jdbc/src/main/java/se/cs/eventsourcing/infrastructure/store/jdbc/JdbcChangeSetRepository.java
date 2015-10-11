@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import se.cs.eventsourcing.domain.changeset.ChangeSet;
 import se.cs.eventsourcing.domain.changeset.Metadata;
-import se.cs.eventsourcing.domain.changeset.Metadatum;
 import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.event.StoredEvent;
 import se.cs.eventsourcing.domain.store.changeset.ChangeSetRepository;
@@ -68,13 +67,13 @@ public class JdbcChangeSetRepository implements ChangeSetRepository {
         return storedEvents;
     }
 
-    private Map<String, Metadatum> getMetadataInChangeSet(String id) {
-        Map<String, Metadatum> metadata = new HashMap<>();
+    private Map<String, Metadata> getMetadataInChangeSet(String id) {
+        Map<String, Metadata> metadata = new HashMap<>();
 
         for (Map<String, Object> row : template.queryForList(SELECT_METADATA_BY_CHANGESET, id)) {
 
             metadata.put((String) row.get("key"),
-                    Metadata.withMetadata((String) row.get("key"), (String) row.get("value")));
+                    new Metadata((String) row.get("key"), (String) row.get("value")));
         }
 
         return metadata;

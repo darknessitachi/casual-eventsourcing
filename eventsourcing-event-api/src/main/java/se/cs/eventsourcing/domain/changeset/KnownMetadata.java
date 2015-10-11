@@ -1,8 +1,8 @@
 package se.cs.eventsourcing.domain.changeset;
 
 public enum KnownMetadata {
-    USER_REFERENCE("casual.store.metadatum.user"),
-    WHEN("casual.store.metadatum.when");
+    USER_REFERENCE("casual.eventsourcing.metadata.userreference"),
+    WHEN("casual.eventsourcing.metadata.when");
 
     private String key;
 

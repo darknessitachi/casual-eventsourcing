@@ -4,7 +4,6 @@ import org.junit.Test;
 import se.cs.eventsourcing.domain.changeset.ChangeSet;
 import se.cs.eventsourcing.domain.changeset.KnownMetadata;
 import se.cs.eventsourcing.domain.changeset.Metadata;
-import se.cs.eventsourcing.domain.changeset.Metadatum;
 import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.TestObjectFactory;
@@ -27,7 +26,7 @@ public class InMemoryEventStoreTest {
         List<DomainEvent> events = new ArrayList<DomainEvent>();
         events.add(TestObjectFactory.newSomethingChanged("Something else"));
 
-        Set<Metadatum> metadata = new HashSet<>();
+        Set<Metadata> metadata = new HashSet<>();
         metadata.add(Metadata.withUserReference("54321"));
 
         instance.append(
@@ -56,7 +55,7 @@ public class InMemoryEventStoreTest {
         List<DomainEvent> events = new ArrayList<DomainEvent>();
         events.add(TestObjectFactory.newSomethingChanged("Something else"));
 
-        Set<Metadatum> metadata = new HashSet<>();
+        Set<Metadata> metadata = new HashSet<>();
         metadata.add(Metadata.withUserReference("54321"));
 
         // boom!
@@ -119,7 +118,7 @@ public class InMemoryEventStoreTest {
         List<DomainEvent> events = new ArrayList<DomainEvent>();
         events.add(TestObjectFactory.newSomethingChanged("Something else"));
 
-        Set<Metadatum> metadata = new HashSet<>();
+        Set<Metadata> metadata = new HashSet<>();
         metadata.add(Metadata.withUserReference("54321"));
 
         instance.append(
@@ -132,7 +131,7 @@ public class InMemoryEventStoreTest {
         List<DomainEvent> events = new ArrayList<DomainEvent>();
         events.add(TestObjectFactory.newSomethingChanged("Something"));
 
-        Set<Metadatum> metadata = new HashSet<>();
+        Set<Metadata> metadata = new HashSet<>();
         metadata.add(Metadata.withUserReference("12345"));
 
         return instance.newStream(events, metadata);

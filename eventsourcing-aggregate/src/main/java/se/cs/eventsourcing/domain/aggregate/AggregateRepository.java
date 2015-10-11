@@ -3,7 +3,6 @@ package se.cs.eventsourcing.domain.aggregate;
 import org.reflections.ReflectionUtils;
 import se.cs.eventsourcing.domain.changeset.KnownMetadata;
 import se.cs.eventsourcing.domain.changeset.Metadata;
-import se.cs.eventsourcing.domain.changeset.Metadatum;
 import se.cs.eventsourcing.domain.store.EventStore;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
@@ -45,12 +44,12 @@ public abstract class AggregateRepository<T extends Aggregate> {
      *
      * @param aggregate the aggregate whose changes we want to save
      */
-    public void save(T aggregate, Metadatum... metadata) {
+    public void save(T aggregate, Metadata... metadata) {
         if (!aggregate.isDirty()) {
             return;
         }
 
-        Set<Metadatum> metadataSet = assembleMetadata(metadata);
+        Set<Metadata> metadataSet = assembleMetadata(metadata);
 
         if (aggregate.getEventStreamId() == null) {
             String newId = store.newStream(aggregate.changes(), metadataSet);
@@ -87,17 +86,17 @@ public abstract class AggregateRepository<T extends Aggregate> {
         }
     }
 
-    private Set<Metadatum> assembleMetadata(Metadatum[] metadata) {
-        Set<Metadatum> result = new HashSet<>();
+    private Set<Metadata> assembleMetadata(Metadata[] metadata) {
+        Set<Metadata> result = new HashSet<>();
 
         Collections.addAll(result, metadata);
 
         boolean dateIsSet =
                 result.stream().anyMatch(
-                        metadatum -> metadatum.getKey().equals(KnownMetadata.WHEN.getKey()));
+                        md -> md.getKey().equals(KnownMetadata.WHEN.getKey()));
 
         if (!dateIsSet) {
-            result.add(Metadata.withWhenNow());
+            result.add(Metadata.withWhen());
         }
 
         return result;

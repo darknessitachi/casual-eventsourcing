@@ -9,7 +9,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import se.cs.eventsourcing.domain.changeset.Metadata;
-import se.cs.eventsourcing.domain.changeset.Metadatum;
 import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
@@ -39,9 +38,9 @@ public class JdbcEventStoreTest {
         events.add(new ChangeFirstName("First"));
         events.add(new ChangeLastName("Last"));
 
-        Metadatum now = Metadata.withWhenNow();
+        Metadata now = Metadata.withWhen();
 
-        Set<Metadatum> metadata = new HashSet<>();
+        Set<Metadata> metadata = new HashSet<>();
         metadata.add(now);
 
         String id = instance.newStream(events, metadata);
@@ -104,9 +103,9 @@ public class JdbcEventStoreTest {
         events.add(new ChangeFirstName("First"));
         events.add(new ChangeLastName("Last"));
 
-        Metadatum now = Metadata.withWhenNow();
+        Metadata now = Metadata.withWhen();
 
-        Set<Metadatum> metadata = new HashSet<>();
+        Set<Metadata> metadata = new HashSet<>();
         metadata.add(now);
 
         return instance.newStream(events, metadata);

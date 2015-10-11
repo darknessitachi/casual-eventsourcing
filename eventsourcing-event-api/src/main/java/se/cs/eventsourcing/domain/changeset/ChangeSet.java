@@ -2,27 +2,40 @@ package se.cs.eventsourcing.domain.changeset;
 
 import se.cs.eventsourcing.domain.event.StoredEvent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ChangeSet {
     private String id;
     private String eventStreamId;
     private List<StoredEvent> storedEvents;
-    private Map<String, Metadatum> metadata;
+    private Map<String, Metadata> metadata;
 
     private ChangeSet() {}
 
     public ChangeSet(String id,
                      String eventStreamId,
                      List<StoredEvent> storedEvents,
-                     Map<String, Metadatum> metadata) {
+                     Map<String, Metadata> metadata) {
 
-        this.id = id;
-        this.eventStreamId = eventStreamId;
-        this.storedEvents = storedEvents;
-        this.metadata = metadata;
+        this.id = checkNotNull(id);
+        this.eventStreamId = checkNotNull(eventStreamId);
+        this.storedEvents = checkNotNull(storedEvents);
+        this.metadata = checkNotNull(metadata);
+
+        checkArgument(!storedEvents.isEmpty());
+    }
+
+    public ChangeSet(String id,
+                     String eventStreamId,
+                     List<StoredEvent> storedEvents) {
+
+        this(id, eventStreamId, storedEvents, new HashMap<>());
     }
 
     public String getId() {
@@ -37,7 +50,7 @@ public class ChangeSet {
         return storedEvents;
     }
 
-    public Map<String, Metadatum> getMetadata() {
+    public Map<String, Metadata> getMetadata() {
         return metadata;
     }
 

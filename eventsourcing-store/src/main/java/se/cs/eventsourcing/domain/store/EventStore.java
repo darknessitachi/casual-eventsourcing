@@ -1,6 +1,6 @@
 package se.cs.eventsourcing.domain.store;
 
-import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.changeset.Metadata;
 import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public interface EventStore {
 
-    String newStream(List<DomainEvent> events, Set<Metadatum> metadata);
+    String newStream(List<DomainEvent> events, Set<Metadata> metadata);
 
     /**
      * Appends the provided events to the event stream

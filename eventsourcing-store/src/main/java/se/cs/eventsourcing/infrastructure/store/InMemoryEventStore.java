@@ -1,7 +1,7 @@
 package se.cs.eventsourcing.infrastructure.store;
 
 import se.cs.eventsourcing.domain.changeset.ChangeSet;
-import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.changeset.Metadata;
 import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.event.StoredEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
@@ -40,7 +40,7 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
     }
 
 
-    public synchronized String newStream(List<DomainEvent> events, Set<Metadatum> metadata) {
+    public synchronized String newStream(List<DomainEvent> events, Set<Metadata> metadata) {
         String aggregateId = UUID.randomUUID().toString();
 
         store.put(aggregateId, new ArrayList<>());
@@ -48,9 +48,9 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
 
         List<StoredEvent> storedEvents = toStoredEvents(events, aggregateId);
 
-        Map<String, Metadatum> metadataMap = new HashMap<>();
-        for (Metadatum metadatum : metadata) {
-            metadataMap.put(metadatum.getKey(), metadatum);
+        Map<String, Metadata> metadataMap = new HashMap<>();
+        for (Metadata entry : metadata) {
+            metadataMap.put(entry.getKey(), entry);
         }
 
         ChangeSet changeSet =
@@ -79,9 +79,9 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
         List<StoredEvent> storedEvents =
                 toStoredEvents(command.getEvents(), command.getEventStreamId());
 
-        Map<String, Metadatum> metadataMap = new HashMap<>();
-        for (Metadatum metadatum : command.getMetadata()) {
-            metadataMap.put(metadatum.getKey(), metadatum);
+        Map<String, Metadata> metadataMap = new HashMap<>();
+        for (Metadata metadata : command.getMetadata()) {
+            metadataMap.put(metadata.getKey(), metadata);
         }
 
         ChangeSet changeSet =

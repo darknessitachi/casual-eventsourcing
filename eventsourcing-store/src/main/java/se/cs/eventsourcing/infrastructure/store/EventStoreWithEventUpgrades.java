@@ -1,6 +1,6 @@
 package se.cs.eventsourcing.infrastructure.store;
 
-import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.changeset.Metadata;
 import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStore;
 import se.cs.eventsourcing.domain.store.EventStream;
@@ -32,7 +32,7 @@ public class EventStoreWithEventUpgrades implements EventStore {
     }
 
     @Override
-    public String newStream(List<DomainEvent> events, Set<Metadatum> metadata) {
+    public String newStream(List<DomainEvent> events, Set<Metadata> metadata) {
         return eventStore.newStream(events, metadata);
     }
 

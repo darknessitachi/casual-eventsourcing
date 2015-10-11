@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import se.cs.eventsourcing.domain.changeset.Metadatum;
+import se.cs.eventsourcing.domain.changeset.Metadata;
 import se.cs.eventsourcing.domain.event.DomainEvent;
 import se.cs.eventsourcing.domain.store.EventStream;
 import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
@@ -40,7 +40,7 @@ public class JdbcEventStore extends EventPublishingStore {
     @Override
     @Transactional
     public String newStream(List<DomainEvent> events,
-                            Set<Metadatum> metadata) {
+                            Set<Metadata> metadata) {
 
         checkNotNull(events, "No point in persisting an empty event stream.");
         checkArgument(!events.isEmpty(), "No point in persisting an empty event stream.");
@@ -79,18 +79,18 @@ public class JdbcEventStore extends EventPublishingStore {
         appendEvents(command, insertChangeSetAndMetadata(command.getEventStreamId(), command.getMetadata()));
     }
 
-    private String insertChangeSetAndMetadata(String eventStreamId, Set<Metadatum> metadata) {
+    private String insertChangeSetAndMetadata(String eventStreamId, Set<Metadata> metadata) {
         String changesetId = UUID.randomUUID().toString();
         template.update(INSERT_CHANGESET,
                 changesetId,
                 eventStreamId,
                 new java.sql.Date(new Date().getTime()));
 
-        for (Metadatum metadatum : metadata) {
+        for (Metadata entry : metadata) {
             template.update(INSERT_METADATA,
                     UUID.randomUUID().toString(),
-                    metadatum.getKey(),
-                    metadatum.getValue(),
+                    entry.getKey(),
+                    entry.getValue(),
                     changesetId);
         }
 
