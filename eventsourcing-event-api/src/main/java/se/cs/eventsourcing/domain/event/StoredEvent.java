@@ -1,12 +1,16 @@
 package se.cs.eventsourcing.domain.event;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.util.Objects;
 
+@JsonDeserialize(using = StoredEventDeserializer.class)
 public class StoredEvent {
 
     private String id;
     private String eventStreamId;
     private DomainEvent event;
+    private String canonicalName;
 
     private StoredEvent() {}
 
@@ -14,6 +18,7 @@ public class StoredEvent {
         this.id = id;
         this.eventStreamId = eventStreamId;
         this.event = event;
+        this.canonicalName = event.getClass().getCanonicalName();
     }
 
     public String getId() {
@@ -26,6 +31,10 @@ public class StoredEvent {
 
     public DomainEvent getEvent() {
         return event;
+    }
+
+    public String getCanonicalName() {
+        return canonicalName;
     }
 
     @Override
@@ -48,6 +57,7 @@ public class StoredEvent {
                 "id='" + id + '\'' +
                 ", eventStreamId='" + eventStreamId + '\'' +
                 ", event=" + event +
+                ", canonicalName='" + canonicalName + '\'' +
                 '}';
     }
 }
