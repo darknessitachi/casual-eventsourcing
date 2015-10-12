@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>se.cs</groupId>
-            <artifactId>eventsourcing-event-api</artifactId>
+            <artifactId>eventsourcing-shared</artifactId>
             <version>0.1</version>
         </dependency>
     </dependencies>

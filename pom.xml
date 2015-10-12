@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
     <version>0.1</version>
     <modules>
+        <module>eventsourcing-shared</module>
         <module>eventsourcing-store</module>
         <module>eventsourcing-aggregate</module>
         <module>eventsourcing-store-jdbc</module>
-        <module>eventsourcing-event-api</module>
     </modules>
 
     <properties>
