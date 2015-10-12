@@ -24,9 +24,15 @@ public class JdbcChangeSetRepository implements ChangeSetRepository {
     private static String SELECT_METADATA_BY_CHANGESET = "select * from casual_metadata where changeset_id = ?";
 
     private JdbcTemplate template;
+    private ObjectMapper mapper;
 
     @Autowired
-    private ObjectMapper mapper;
+    public JdbcChangeSetRepository(DataSource dataSource,
+                                   ObjectMapper mapper) {
+
+        this.template = new JdbcTemplate(dataSource);
+        this.mapper = mapper;
+    }
 
     @Override
     public List<ChangeSet> getChangeSets(String eventStreamId) {
@@ -95,10 +101,5 @@ public class JdbcChangeSetRepository implements ChangeSetRepository {
                         (String) row.get("stream_id"),
                         getStoredEventsInChangeSet(changeSetId),
                         getMetadataInChangeSet(changeSetId)));
-    }
-
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.template = new JdbcTemplate(dataSource);
     }
 }

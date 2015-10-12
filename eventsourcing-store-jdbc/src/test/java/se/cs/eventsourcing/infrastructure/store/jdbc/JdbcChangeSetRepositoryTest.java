@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:application-context.xml" })
+@ContextConfiguration({ "classpath:jdbcStoreContext.xml" })
 @TransactionConfiguration(defaultRollback=true)
 @Transactional
 public class JdbcChangeSetRepositoryTest {

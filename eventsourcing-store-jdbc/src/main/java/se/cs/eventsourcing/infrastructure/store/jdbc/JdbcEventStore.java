@@ -33,12 +33,18 @@ public class JdbcEventStore extends EventPublishingStore {
     private static String SELECT_EVENTSTREAM_VERSION = "select version from casual_stream where id = ?";
 
     private JdbcTemplate template;
-
-    @Autowired
     private ObjectMapper mapper;
 
+    @Autowired
+    public JdbcEventStore(DataSource dataSource,
+                          ObjectMapper mapper) {
+
+        this.template = new JdbcTemplate(dataSource);
+        this.mapper = mapper;
+    }
+
     @Override
-    @Transactional
+    @Transactional("txManager")
     public String newStream(List<DomainEvent> events,
                             Set<Metadata> metadata) {
 
@@ -71,7 +77,7 @@ public class JdbcEventStore extends EventPublishingStore {
     }
 
     @Override
-    @Transactional
+    @Transactional("txManager")
     public void append(NewChangeSet command) {
         checkNotNull(command.getEvents(), "No point in persisting an empty event stream.");
         checkArgument(!command.getEvents().isEmpty(), "No point in persisting an empty event stream.");
@@ -151,10 +157,5 @@ public class JdbcEventStore extends EventPublishingStore {
         }
 
         return (long) rows.get(0).get("version");
-    }
-
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.template = new JdbcTemplate(dataSource);
     }
 }

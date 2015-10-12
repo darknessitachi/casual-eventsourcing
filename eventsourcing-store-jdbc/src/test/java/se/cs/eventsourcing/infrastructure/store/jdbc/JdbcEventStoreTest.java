@@ -21,7 +21,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:application-context.xml" })
+@ContextConfiguration({ "classpath:jdbcStoreContext.xml" })
 @TransactionConfiguration(defaultRollback=true)
 @Transactional
 public class JdbcEventStoreTest {
