@@ -7,7 +7,7 @@
     <groupId>se.cs</groupId>
     <artifactId>eventsourcing</artifactId>
     <packaging>pom</packaging>
-    <version>0.1</version>
+    <version>0.1.0</version>
     <modules>
         <module>eventsourcing-shared</module>
         <module>eventsourcing-store</module>
