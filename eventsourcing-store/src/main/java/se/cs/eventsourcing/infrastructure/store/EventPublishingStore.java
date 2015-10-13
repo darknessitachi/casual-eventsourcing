@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class EventPublishingStore implements EventStore {
 
-    private final List<EventSubscriber> subscribers = new ArrayList<>();
+    private List<EventSubscriber> subscribers = new ArrayList<>();
 
     /**
      * Subscribes the object to the list of subscribers.
@@ -21,6 +21,10 @@ public abstract class EventPublishingStore implements EventStore {
      */
     public void subscribe(EventSubscriber subscriber) {
         this.subscribers.add(checkNotNull(subscriber));
+    }
+
+    public void setSubscribers(List<EventSubscriber> subscribers) {
+        this.subscribers = checkNotNull(subscribers);
     }
 
     /**
