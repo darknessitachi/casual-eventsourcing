@@ -22,15 +22,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Repository
 public class JdbcEventStore extends EventPublishingStore {
 
-    private static String INSERT_CHANGESET = "insert into casual_changeset (id, stream_id, when) values (?, ?, ?)";
-    private static String INSERT_METADATA = "insert into casual_metadata (id, key, value, changeset_id) values (?, ?, ?, ?)";
-    private static String INSERT_STREAM = "insert into casual_stream (id, version) values (?, ?)";
-    private static String INSERT_EVENT = "insert into casual_event (id, stream_id, class, content, version, changeset_id) values (?, ?, ?, ?, ?, ?)";
+    private static String INSERT_CHANGESET = "insert into casual_changeset (id, stream_id, created_) values (?, ?, ?)";
+    private static String INSERT_METADATA = "insert into casual_metadata (id, key_, value_, changeset_id) values (?, ?, ?, ?)";
+    private static String INSERT_STREAM = "insert into casual_stream (id, version_) values (?, ?)";
+    private static String INSERT_EVENT = "insert into casual_event (id, stream_id, class_, content_, version_, changeset_id) values (?, ?, ?, ?, ?, ?)";
 
-    private static String UPDATE_STREAM_VERSION = "update casual_stream set version = ? where id = ?";
+    private static String UPDATE_STREAM_VERSION = "update casual_stream set version_ = ? where id = ?";
 
-    private static String SELECT_EVENTSTREAM = "select class, content from casual_event where stream_id = ? order by version asc";
-    private static String SELECT_EVENTSTREAM_VERSION = "select version from casual_stream where id = ?";
+    private static String SELECT_EVENTSTREAM = "select class_, content_ from casual_event where stream_id = ? order by version_ asc";
+    private static String SELECT_EVENTSTREAM_VERSION = "select version_ from casual_stream where id = ?";
 
     private JdbcTemplate template;
     private ObjectMapper mapper;
@@ -90,7 +90,7 @@ public class JdbcEventStore extends EventPublishingStore {
         template.update(INSERT_CHANGESET,
                 changesetId,
                 eventStreamId,
-                new java.sql.Date(new Date().getTime()));
+                new java.sql.Timestamp(new Date().getTime()));
 
         for (Metadata entry : metadata) {
             template.update(INSERT_METADATA,
@@ -136,8 +136,8 @@ public class JdbcEventStore extends EventPublishingStore {
         List<DomainEvent> events = new ArrayList<>();
         for (Map<String, Object> row : rows) {
             try {
-                events.add(mapper.readValue((String) row.get("content"),
-                        (Class<DomainEvent>) Class.forName((String) row.get("class"))));
+                events.add(mapper.readValue((String) row.get("content_"),
+                        (Class<DomainEvent>) Class.forName((String) row.get("class_"))));
 
             } catch (Exception e) {
                 Throwables.propagate(e);
@@ -156,6 +156,6 @@ public class JdbcEventStore extends EventPublishingStore {
             return 0;
         }
 
-        return (long) rows.get(0).get("version");
+        return (long) rows.get(0).get("version_");
     }
 }
