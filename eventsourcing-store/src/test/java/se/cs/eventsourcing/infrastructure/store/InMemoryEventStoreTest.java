@@ -20,8 +20,8 @@ public class InMemoryEventStoreTest {
 
     @Test
     public void append() {
-        String aggregateId = newEventStream();
-        long expectedVersion = instance.getMostRecentVersion(aggregateId);
+        String eventStreamId = newEventStream();
+        long expectedVersion = instance.getMostRecentVersion(eventStreamId);
 
         List<DomainEvent> events = new ArrayList<DomainEvent>();
         events.add(TestObjectFactory.newSomethingChanged("Something else"));
@@ -30,10 +30,11 @@ public class InMemoryEventStoreTest {
         metadata.add(Metadata.withUserReference("54321"));
 
         instance.append(
-                new NewChangeSet(aggregateId, expectedVersion, events, metadata));
+                new NewChangeSet(eventStreamId, expectedVersion, events, metadata));
 
         // let's look the events up
-        Optional<EventStream> result = instance.loadStream(aggregateId);
+        Optional<EventStream> result =
+                instance.loadStream(eventStreamId, 1, instance.getMostRecentVersion(eventStreamId));
 
         assertTrue(result.isPresent());
 
@@ -50,7 +51,7 @@ public class InMemoryEventStoreTest {
 
     @Test(expected = IllegalStateException.class)
     public void appendWrongVersion() {
-        String aggregateId = newEventStream();
+        String eventStreamId = newEventStream();
 
         List<DomainEvent> events = new ArrayList<DomainEvent>();
         events.add(TestObjectFactory.newSomethingChanged("Something else"));
@@ -60,7 +61,58 @@ public class InMemoryEventStoreTest {
 
         // boom!
         instance.append(
-                new NewChangeSet(aggregateId, 123, events, metadata));
+                new NewChangeSet(eventStreamId, 123, events, metadata));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void loadStreamIllegalFromVersion() {
+        String eventStreamId = newEventStream();
+
+        instance.loadStream(eventStreamId, 0, 2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void loadStreamIllegalToVersion() {
+        String eventStreamId = newEventStream();
+
+        instance.loadStream(eventStreamId, 1, 5);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void loadStreamFromVersionLargerThanToVersion() {
+        String eventStreamId = newEventStream();
+
+        instance.loadStream(eventStreamId, 2, 1);
+    }
+
+    @Test
+    public void loadStreamOldVersion() {
+        List<DomainEvent> events = new ArrayList<DomainEvent>();
+        events.add(TestObjectFactory.newSomethingChanged("Something"));
+        events.add(TestObjectFactory.newSomethingChanged("Something else"));
+        events.add(TestObjectFactory.newSomethingChanged("Yet more things happened"));
+
+        String eventStreamId = instance.newStream(events, Collections.emptySet());
+
+        // let's fetch the two first events
+        EventStream stream = instance.loadStream(eventStreamId, 1, 2).get();
+
+        assertEquals(1, stream.fromVersion());
+        assertEquals(2, stream.toVersion());
+        assertEquals("Something",
+                ((TestObjectFactory.SomethingChanged)stream.getEvents().get(0)).getSomething());
+        assertEquals("Something else",
+                ((TestObjectFactory.SomethingChanged)stream.getEvents().get(1)).getSomething());
+
+        // let's fetch the two last events
+        stream = instance.loadStream(eventStreamId, 2, 3).get();
+
+        assertEquals(2, stream.fromVersion());
+        assertEquals(3, stream.toVersion());
+        assertEquals("Something else",
+                ((TestObjectFactory.SomethingChanged)stream.getEvents().get(0)).getSomething());
+        assertEquals("Yet more things happened",
+                ((TestObjectFactory.SomethingChanged)stream.getEvents().get(1)).getSomething());
     }
 
     @Test

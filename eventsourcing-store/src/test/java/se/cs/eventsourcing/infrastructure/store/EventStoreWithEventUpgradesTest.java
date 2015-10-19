@@ -42,7 +42,8 @@ public class EventStoreWithEventUpgradesTest {
 
         String eventStreamId = instance.newStream(events, Collections.emptySet());
 
-        EventStream es = instance.loadStream(eventStreamId).get();
+        EventStream es =
+                instance.loadStream(eventStreamId, 1, 2).get();
 
         DomainEvent firstEvent = es.getEvents().get(0);
         assertEquals("the first event should have been upgraded",

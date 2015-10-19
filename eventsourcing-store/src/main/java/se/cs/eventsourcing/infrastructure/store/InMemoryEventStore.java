@@ -10,6 +10,7 @@ import se.cs.eventsourcing.domain.store.changeset.NewChangeSet;
 
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -21,22 +22,33 @@ public class InMemoryEventStore extends EventPublishingStore implements ChangeSe
 
     private final Map<String, List<StoredEvent>> flattenedStore = new HashMap<>();
 
-    public Optional<EventStream> loadStream(String eventStreamId) {
+    @Override
+    public Optional<EventStream> loadStream(String eventStreamId, long fromVersion, long toVersion) {
         if (!flattenedStore.containsKey(checkNotNull(eventStreamId))) {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(
-                EventStream.newFromStart(
-                        fromStoredEvents(flattenedStore.get(eventStreamId))));
+        checkArgument(toVersion >= fromVersion,
+                "toVersion (%s) must be greater than or equal to fromVersion (%s)", toVersion, fromVersion);
+        checkArgument(fromVersion > 0,
+                "fromVersion must be greater than zero, got %s", fromVersion);
+        checkArgument(toVersion <= getMostRecentVersion(eventStreamId),
+                "toVersion (%s) must be lesser than or equal to the most recent version", toVersion);
+
+        List<DomainEvent> result = new ArrayList<>();
+        for (long i = fromVersion - 1; i < toVersion; i++) {
+            result.add(flattenedStore.get(eventStreamId).get((int) i).getEvent());
+        }
+
+        return Optional.of(EventStream.newFromVersion(fromVersion, result));
     }
 
     public long getMostRecentVersion(String eventStreamId) {
-        Optional<EventStream> stream = loadStream(eventStreamId);
+        if (!flattenedStore.containsKey(checkNotNull(eventStreamId))) {
+            return 0L;
+        }
 
-        return stream.isPresent()
-                ? stream.get().toVersion()
-                : 0L;
+        return flattenedStore.get(eventStreamId).size();
     }
 
 

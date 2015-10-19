@@ -29,7 +29,7 @@ public class JdbcEventStore extends EventPublishingStore {
 
     private static String UPDATE_STREAM_VERSION = "update casual_stream set version_ = ? where id = ?";
 
-    private static String SELECT_EVENTSTREAM = "select class_, content_ from casual_event where stream_id = ? order by version_ asc";
+    private static String SELECT_EVENTSTREAM = "select class_, content_ from casual_event where stream_id = ? and version_ >= ? and version_ <= ? order by version_ asc";
     private static String SELECT_EVENTSTREAM_VERSION = "select version_ from casual_stream where id = ?";
 
     private JdbcTemplate template;
@@ -125,9 +125,17 @@ public class JdbcEventStore extends EventPublishingStore {
     }
 
     @Override
-    public Optional<EventStream> loadStream(String eventStreamId) {
+    public Optional<EventStream> loadStream(String eventStreamId, long fromVersion, long toVersion) {
+
+        checkArgument(toVersion >= fromVersion,
+                "toVersion (%s) must be greater than or equal to fromVersion (%s)", toVersion, fromVersion);
+        checkArgument(fromVersion > 0,
+                "fromVersion must be greater than zero, got %s", fromVersion);
+        checkArgument(toVersion <= getMostRecentVersion(eventStreamId),
+                "toVersion (%s) must be lesser than or equal to the most recent version", toVersion);
+
         List<Map<String, Object>> rows =
-                template.queryForList(SELECT_EVENTSTREAM, eventStreamId);
+                template.queryForList(SELECT_EVENTSTREAM, eventStreamId, fromVersion, toVersion);
 
         if (rows.isEmpty()) {
             return Optional.empty();
@@ -144,7 +152,7 @@ public class JdbcEventStore extends EventPublishingStore {
             }
         }
 
-        return Optional.of(EventStream.newFromStart(events));
+        return Optional.of(EventStream.newFromVersion(fromVersion, events));
     }
 
     @Override

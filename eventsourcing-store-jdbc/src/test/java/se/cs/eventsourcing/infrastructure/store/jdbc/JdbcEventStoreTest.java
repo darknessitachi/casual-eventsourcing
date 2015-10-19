@@ -45,7 +45,8 @@ public class JdbcEventStoreTest {
 
         String id = instance.newStream(events, metadata);
 
-        EventStream stream = instance.loadStream(id).get();
+        EventStream stream =
+                instance.loadStream(id, 1, instance.getMostRecentVersion(id)).get();
 
         assertEquals("Two events were added",
                 2, stream.getEvents().size());
@@ -62,7 +63,8 @@ public class JdbcEventStoreTest {
     @Test
     public void append() {
         String id = sampleStream();
-        EventStream stream = instance.loadStream(id).get();
+        EventStream stream =
+                instance.loadStream(id, 1, instance.getMostRecentVersion(id)).get();
 
         assertEquals(2, stream.toVersion());
 
@@ -74,7 +76,7 @@ public class JdbcEventStoreTest {
                 events,
                 Collections.emptySet()));
 
-        stream = instance.loadStream(id).get();
+        stream = instance.loadStream(id, 1, instance.getMostRecentVersion(id)).get();
 
         assertEquals("One more event was added. Two plus one equals three.",
                 3, stream.toVersion());
@@ -95,6 +97,46 @@ public class JdbcEventStoreTest {
 
         assertEquals("Two events were added, version should be 2",
                 2, instance.getMostRecentVersion(id));
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void loadStreamIllegalFromVersion() {
+        String eventStreamId = sampleStream();
+
+        instance.loadStream(eventStreamId, 0, 2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void loadStreamIllegalToVersion() {
+        String eventStreamId = sampleStream();
+
+        instance.loadStream(eventStreamId, 1, 5);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void loadStreamFromVersionLargerThanToVersion() {
+        String eventStreamId = sampleStream();
+
+        instance.loadStream(eventStreamId, 2, 1);
+    }
+
+    @Test
+    public void loadStreamOldVersion() {
+
+        String eventStreamId = sampleStream();
+
+        // let's fetch version one only
+        EventStream stream = instance.loadStream(eventStreamId, 1, 1).get();
+
+        assertEquals(1, stream.fromVersion());
+        assertEquals(1, stream.toVersion());
+
+        // let's fetch version two only
+        stream = instance.loadStream(eventStreamId, 2, 2).get();
+
+        assertEquals(2, stream.fromVersion());
+        assertEquals(2, stream.toVersion());
     }
 
     private String sampleStream() {

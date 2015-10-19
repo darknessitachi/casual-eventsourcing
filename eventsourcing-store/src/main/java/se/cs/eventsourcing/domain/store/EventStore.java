@@ -25,13 +25,19 @@ public interface EventStore {
     void append(NewChangeSet command);
 
     /**
-     * Loads the stream of events for the provided eventStreamId.
-     * TODO: there should be some way to limit or page this..
+     * Loads a stream of events for the provided eventStreamId.
+     * The result of this operation contains a sequence of events, ranging
+     * from and including the version specified by the fromVersion argument
+     * up to and including the version specified by the toVersion argument.
      *
      * @param eventStreamId the event steam id
+     * @param toVersion the first event version to include in the stream
+     * @param toVersion the last event version to include in the stream
      * @return the event stream if found, otherwise an empty result
+     * @throws IllegalArgumentException if the event stream lacks any of
+     * the provided versions, or if fromVersion > toVersion
      */
-    Optional<EventStream> loadStream(String eventStreamId);
+    Optional<EventStream> loadStream(String eventStreamId, long fromVersion, long toVersion);
 
     /**
      * Returns the most recent version of the aggregate with

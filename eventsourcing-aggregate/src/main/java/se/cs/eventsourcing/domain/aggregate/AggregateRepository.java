@@ -113,7 +113,12 @@ public abstract class AggregateRepository<T extends Aggregate> {
      * @return an optional container with the result embedded (if existing)
      */
     public Optional<T> find(String eventStreamId) {
-        Optional<EventStream> stream = store.loadStream(eventStreamId);
+        return find(eventStreamId, store.getMostRecentVersion(eventStreamId));
+    }
+
+    public Optional<T> find(String eventStreamId, long aggregateVersion) {
+        Optional<EventStream> stream =
+                store.loadStream(eventStreamId, 1, aggregateVersion);
 
         return stream.isPresent()
                 ? Optional.of(createAndReplayAggregate(eventStreamId, stream.get()))

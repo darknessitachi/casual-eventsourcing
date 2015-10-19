@@ -26,6 +26,28 @@ public class AggregateRepositoryTest {
     }
 
     @Test
+    public void findParticularVersion() {
+        PersonRepository rep = newRepositoryWithAnAggregate();
+
+        Person person = rep.find(anEventStreamId).get();
+
+        person.changeLastName("Last name");
+        person.changeFirstName("First name");
+
+        rep.save(person);
+
+        // okay, we should now be at version three
+        assertEquals(3, person.version());
+        assertEquals("First name", person.getFirstName());
+
+        // let's fetch an old version of the aggregate
+        person = rep.find(anEventStreamId, 2).get();
+
+        assertEquals(2, person.version());
+        assertEquals("Martin", person.getFirstName());
+    }
+
+    @Test
     public void findNoResult() {
         assertFalse(newRepositoryWithAnAggregate().find("asdf").isPresent());
     }
@@ -60,6 +82,27 @@ public class AggregateRepositoryTest {
         assertEquals(person.getFirstName(), stored.getFirstName());
         assertEquals(person.getLastName(), stored.getLastName());
         assertEquals(1, stored.version());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void saveOldVersion() {
+        PersonRepository rep = newRepositoryWithAnAggregate();
+
+        Person person = rep.find(anEventStreamId).get();
+
+        person.changeLastName("Last name");
+        person.changeFirstName("First name");
+
+        rep.save(person);
+
+        // version is now three - let's load the previous version
+        person = rep.find(anEventStreamId, 2).get();
+
+        // okay, now we add a change and try to save it
+        person.changeFirstName("Old version first name");
+
+        // this should throw an exception; Expected version 2, got 3
+        rep.save(person);
     }
 
     private PersonRepository newRepositoryWithAnAggregate() {
