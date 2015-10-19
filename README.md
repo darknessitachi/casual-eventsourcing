@@ -4,7 +4,7 @@ The purpose of the casual-eventsourcing project is to make life easier for those
 * Model aggregates that track their internal state by appending to a list of domain events
 * Persist aggregates - i.e. their internal state - via a repository pattern, backed by an event store
 * Persist your events in an underlying jdbc event store (or another technology for that matter if you implement it)
-* Replay aggregates via an event stream
+* Replay aggregates via an event stream up to any version
 * Upgrade your events, if their structure ever need to change
 
 ## License?
