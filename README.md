@@ -14,6 +14,7 @@ MIT, so go nuts!
 Please check the [wiki](https://github.com/indifferen7/casual-eventsourcing/wiki)!
 
 ## Roadmap
-The current version of casual-eventsourcing is v0.1.0. This is what's in the pipe for future releases:
-* **v0.2**: Load (i.e. replay) aggregates to any version
-* **v0.3**: Snapshot support
+The current version of casual-eventsourcing is v0.1.0. In the next release we plan to
+* add support for loading (i.e. replay) aggregates to any version;
+* add snapshot support;
+* implement at least one more event store using some cool technology
