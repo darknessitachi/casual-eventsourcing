@@ -42,8 +42,9 @@ public class EventStoreWithEventUpgrades implements EventStore {
     }
 
     @Override
-    public Optional<EventStream> loadStream(String eventStreamId) {
-        Optional<EventStream> stream = eventStore.loadStream(eventStreamId);
+    public Optional<EventStream> loadStream(String eventStreamId, long fromVersion, long toVersion) {
+
+        Optional<EventStream> stream = eventStore.loadStream(eventStreamId, fromVersion, toVersion);
 
         if (!stream.isPresent()) {
             return Optional.empty();

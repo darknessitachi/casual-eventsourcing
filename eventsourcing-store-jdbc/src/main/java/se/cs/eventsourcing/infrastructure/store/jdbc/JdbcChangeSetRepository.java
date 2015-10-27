@@ -17,10 +17,10 @@ import java.util.*;
 @Repository
 public class JdbcChangeSetRepository implements ChangeSetRepository {
 
-    private static String SELECT_CHANGESETS_BY_STREAMID = "select * from casual_changeset where stream_id = ?";
+    private static String SELECT_CHANGESETS_BY_STREAMID = "select * from casual_changeset where stream_id = ? order by created_ asc";
     private static String SELECT_CHANGESET_BY_ID = "select * from casual_changeset where id = ?";
 
-    private static String SELECT_EVENTS_BY_CHANGESET = "select id, stream_id, content, class from casual_event where changeset_id = ?";
+    private static String SELECT_EVENTS_BY_CHANGESET = "select id, stream_id, content_, class_ from casual_event where changeset_id = ?";
     private static String SELECT_METADATA_BY_CHANGESET = "select * from casual_metadata where changeset_id = ?";
 
     private JdbcTemplate template;
@@ -62,8 +62,8 @@ public class JdbcChangeSetRepository implements ChangeSetRepository {
                         new StoredEvent(
                                 (String) row.get("id"),
                                 (String) row.get("stream_id"),
-                                mapper.readValue((String) row.get("content"),
-                                        (Class<DomainEvent>) Class.forName((String) row.get("class")))));
+                                mapper.readValue((String) row.get("content_"),
+                                        (Class<DomainEvent>) Class.forName((String) row.get("class_")))));
 
             } catch (Exception e) {
                 Throwables.propagate(e);
@@ -78,8 +78,8 @@ public class JdbcChangeSetRepository implements ChangeSetRepository {
 
         for (Map<String, Object> row : template.queryForList(SELECT_METADATA_BY_CHANGESET, id)) {
 
-            metadata.put((String) row.get("key"),
-                    new Metadata((String) row.get("key"), (String) row.get("value")));
+            metadata.put((String) row.get("key_"),
+                    new Metadata((String) row.get("key_"), (String) row.get("value_")));
         }
 
         return metadata;

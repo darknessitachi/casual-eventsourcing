@@ -11,7 +11,7 @@
             <column name="id" type="varchar(36)">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="version" type="bigint">
+            <column name="version_" type="bigint">
                 <constraints nullable="false" />
             </column>
         </createTable>
@@ -25,7 +25,7 @@
             <column name="stream_id" type="varchar(36)">
                 <constraints nullable="false" foreignKeyName="fk_changeset_stream" references="casual_stream(id)"/>
             </column>
-            <column name="when" type="datetime">
+            <column name="created_" type="datetime">
                 <constraints nullable="false" />
             </column>
         </createTable>
@@ -36,10 +36,10 @@
             <column name="id" type="varchar(36)">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="key" type="varchar(255)">
+            <column name="key_" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="value" type="varchar(255)" />
+            <column name="value_" type="varchar(255)" />
             <column name="changeset_id" type="varchar(36)">
                 <constraints nullable="false" foreignKeyName="fk_metadata_changeset" references="casual_changeset(id)"/>
             </column>
@@ -54,13 +54,13 @@
             <column name="stream_id" type="varchar(36)">
                 <constraints primaryKey="true" nullable="false" foreignKeyName="fk_event_stream" references="casual_stream(id)"/>
             </column>
-            <column name="class" type="varchar(255)">
+            <column name="class_" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="content" type="text">
+            <column name="content_" type="text">
                 <constraints nullable="false" />
             </column>
-            <column name="version" type="bigint">
+            <column name="version_" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="changeset_id" type="varchar(36)">
