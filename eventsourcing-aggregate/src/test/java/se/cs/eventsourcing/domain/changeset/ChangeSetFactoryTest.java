@@ -1,11 +1,13 @@
 package se.cs.eventsourcing.domain.changeset;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
-import se.cs.eventsourcing.domain.event.StoredEvent;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import se.cs.eventsourcing.domain.event.StoredEvent;
 
 public class ChangeSetFactoryTest {
 
